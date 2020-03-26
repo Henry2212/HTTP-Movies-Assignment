@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useRouteMatch } from 'react-router-dom';
-import MovieCard from './MovieCard';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useRouteMatch } from "react-router-dom";
+import MovieCard from "./MovieCard";
 
-function Movie({ addToSavedList }) {
+function Movie(props) {
+  console.log("this is the props Movie:", props);
   const [movie, setMovie] = useState(null);
   const match = useRouteMatch();
 
@@ -11,11 +12,11 @@ function Movie({ addToSavedList }) {
     axios
       .get(`http://localhost:5000/api/movies/${id}`)
       .then(res => setMovie(res.data))
-      .catch(err => console.log(err.response));
+      .catch(err => console.log("this is from catch", err.response));
   };
 
   const saveMovie = () => {
-    addToSavedList(movie);
+    props.addToSavedList(movie);
   };
 
   useEffect(() => {
@@ -26,13 +27,28 @@ function Movie({ addToSavedList }) {
     return <div>Loading movie information...</div>;
   }
 
-  return (
-    <div className='save-wrapper'>
-      <MovieCard movie={movie} />
+  const removeMovie = e => {
+    e.preventDefault();
+    axios
+      .delete(`http://localhost:5000/api/movies/${props.match.params.id}`)
+      .then(res => props.history.push("/"))
+      .catch(err => console.log(err));
+  };
 
-      <div className='save-button' onClick={saveMovie}>
+  return (
+    <div className="save-wrapper">
+      <MovieCard movie={movie} />
+      <div className="save-button" onClick={saveMovie}>
         Save
       </div>
+      <button
+        onClick={() =>
+          props.history.push(`/update-movie/${props.match.params.id}`)
+        }
+      >
+        Edit movie
+      </button>
+      <button onClick={removeMovie}>Delete</button>
     </div>
   );
 }

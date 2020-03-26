@@ -65,13 +65,45 @@ body {
   background-color: green;
   color: white;
 }
-
+.delete-button {
+  position: absolute;
+  top: 75px;
+  right: 25px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: rgb(158, 137, 137);
+  color: white;
+}
+.delete-button:hover {
+  background-color: black;
+  color: white;
+}
+.update-button {
+  position: absolute;
+  top: 125px;
+  right: 25px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: rgb(17, 223, 52);
+  color: white;
+}
+.update-button:hover {
+  background-color: black;
+  color: white;
+}
 .home-button {
   padding: 5px 10px;
   background-color: lightskyblue;
 }
 
 .movie-warning {
-  color: red;
+ 
   text-align: center;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 100px auto;
+  grid-gap: 5px;
+  padding: 10px;
 }
